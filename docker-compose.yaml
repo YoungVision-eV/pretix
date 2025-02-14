@@ -1,0 +1,26 @@
+services:
+  pretix:
+    build:
+      context: ./pretix/
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - 'pretix-data:/data'
+  db:
+    image: 'postgres:16'
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_PASSWORD: 'pretix'
+      POSTGRES_USER: 'pretix'
+      POSTGRES_DB: 'pretix'
+  redis:
+    image: 'redis:7'
+    volumes:
+      - 'redis-data:/data'
+
+volumes:
+  pretix-data:
+  postgres-data:
+  redis-data:

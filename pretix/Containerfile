@@ -1,0 +1,3 @@
+FROM 'pretix/standalone:stable'
+
+COPY ./pretix.cfg /etc/pretix/pretix.cfg
