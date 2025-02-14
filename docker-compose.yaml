@@ -1,10 +1,28 @@
 services:
   pretix:
-    build:
-      context: ./pretix/
+    image: 'pretix/standalone:stable'
     depends_on:
       - db
       - redis
+    environment:
+      # format is PRETIX_${section}_${key} from config
+      PRETIX_PRETIX_URL: '${PRETIX_URL}'
+      PRETIX_PRETIX_CURRENCY: 'EUR'
+      PRETIX_LOCALE_DEFAULT: 'de'
+      PRETIX_LOCALE_TIMEZONE: 'Europe/Berlin'
+      PRETIX_DATABASE_BACKEND: 'postgresql'
+      PRETIX_DATABASE_HOST: 'db'
+      PRETIX_DATABASE_NAME: 'pretix'
+      PRETIX_DATABASE_USER: 'pretix'
+      PRETIX_DATABASE_PASSWORD: '${DATABASE_PASSWORD}'
+      PRETIX_REDIS_LOCATION: 'redis://redis/0'
+      PRETIX_REDIS_SESSIONS: 'true'
+      PRETIX_CELERY_BROKER: 'redis://redis/1'
+      PRETIX_CELERY_BACKEND: 'redis://redis/2'
+      PRETIX_PRETIX_TRUST_X_FORWARDED_FOR: 'true'
+      PRETIX_PRETIX_TRUST_X_FORWARDED_PROTO: 'true'
+      PRETIX_PRETIX_TRUST_X_FORWARDED_HOST: 'true'
+      PRETIX_PRETIX_DATADIR: '/data'
     volumes:
       - 'pretix-data:/data'
   db:
@@ -12,7 +30,7 @@ services:
     volumes:
       - 'postgres-data:/var/lib/postgresql/data'
     environment:
-      POSTGRES_PASSWORD: 'pretix'
+      POSTGRES_PASSWORD: '${DATABASE_PASSWORD}'
       POSTGRES_USER: 'pretix'
       POSTGRES_DB: 'pretix'
   redis:
