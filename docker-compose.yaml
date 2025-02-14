@@ -6,7 +6,7 @@ services:
       - redis
     environment:
       # format is PRETIX_${section}_${key} from config
-      PRETIX_PRETIX_URL: '${PRETIX_URL}'
+      PRETIX_PRETIX_URL: '${SERVICE_FQDN_PRETIX}'
       PRETIX_PRETIX_CURRENCY: 'EUR'
       PRETIX_LOCALE_DEFAULT: 'de'
       PRETIX_LOCALE_TIMEZONE: 'Europe/Berlin'
@@ -14,7 +14,7 @@ services:
       PRETIX_DATABASE_HOST: 'db'
       PRETIX_DATABASE_NAME: 'pretix'
       PRETIX_DATABASE_USER: 'pretix'
-      PRETIX_DATABASE_PASSWORD: '${DATABASE_PASSWORD}'
+      PRETIX_DATABASE_PASSWORD: '${SERVICE_PASSWORD_DATABASE}'
       PRETIX_REDIS_LOCATION: 'redis://redis/0'
       PRETIX_REDIS_SESSIONS: 'true'
       PRETIX_CELERY_BROKER: 'redis://redis/1'
@@ -30,7 +30,7 @@ services:
     volumes:
       - 'postgres-data:/var/lib/postgresql/data'
     environment:
-      POSTGRES_PASSWORD: '${DATABASE_PASSWORD}'
+      POSTGRES_PASSWORD: '${SERVICE_PASSWORD_DATABASE}'
       POSTGRES_USER: 'pretix'
       POSTGRES_DB: 'pretix'
   redis:
