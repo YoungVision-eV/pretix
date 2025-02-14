@@ -24,6 +24,7 @@ services:
       PRETIX_PRETIX_TRUST_X_FORWARDED_HOST: 'true'
       PRETIX_PRETIX_DATADIR: '/data'
       PRETIX_MAIL_HOST: 'smtp-relay.gmail.com'
+      PRETIX_MAIL_PORT: '587'
       PRETIX_MAIL_FROM: 'kontakt@youngvision.org'
       PRETIX_MAIL_PASSWORD: '${GMAIL_PASSWORD}'
       PRETIX_MAIL_TLS: 'on'
